@@ -1,1 +1,7 @@
-# cs35L-Project
+#
+cs35L-Project
+
+'''
+npm install
+npm run dev
+'''
