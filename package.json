@@ -1,0 +1,20 @@
+{
+  "name": "35l_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "proxy": "https://localhost:8080",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "npx nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^6.3.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.14"
+  }
+}
