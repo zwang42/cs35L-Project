@@ -1,0 +1,22 @@
+.post {
+    max-width: 1000px;
+    background-color: white;
+    border: 1px solid lightgrey;
+    margin-bottom: 50px;
+}
+.post__image {
+    width:100%;
+    object-fit: contain;
+    border-top: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+}
+
+.post__text{
+    font-weight: normal;
+    padding: 15px;
+}
+
+.post__username{
+    padding: 15px 10px;
+    margin-right: 8px;
+}
