@@ -7,6 +7,7 @@ import { AuthProvider } from "./contexts/AuthContext.js";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Login from "./pages/Login.js";
 import Homepage from "./pages/Homepage.js";
+import Signup from "./pages/Signup.js"
 import firebase from 'firebase/app';
 import "firebase/firestore";
 import "firebase/auth";
@@ -25,10 +26,16 @@ function App() {
       >
 
       <Router>
+          <AuthProvider>
           <Switch>
             <Route path = "/login" component = {Login} />
-            <Route path = "/" component = {Homepage} />
+            <Route path = "/signup" component = {Signup} />
+
+            <Route path="/">
+                {user ? <Redirect to="/profile"/> : <Redirect to="/login"/>}
+              </Route>
           </Switch>
+          </AuthProvider>
       </Router>
       </div>
 	</Container>
