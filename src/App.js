@@ -11,6 +11,7 @@ import Signup from "./pages/Signup.js"
 import firebase from 'firebase/app';
 import "firebase/firestore";
 import "firebase/auth";
+import '../styles/app.css';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -30,7 +31,7 @@ function App() {
           <Switch>
             <Route path = "/login" component = {Login} />
             <Route path = "/signup" component = {Signup} />
-
+            <Route path = "/homepage" component = {Homepage} />
             <Route path="/">
                 {user ? <Redirect to="/profile"/> : <Redirect to="/login"/>}
               </Route>
