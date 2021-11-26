@@ -1,5 +1,4 @@
 import logo from './logo.svg';
-import './App.css';
 import React, { useState } from 'react';
 import { Container } from "react-bootstrap";
 import Post from './Post'
@@ -11,8 +10,7 @@ import Signup from "./pages/Signup.js"
 import firebase from 'firebase/app';
 import "firebase/firestore";
 import "firebase/auth";
-import '../styles/app.css';
-
+import '../src/app.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 function App() {
