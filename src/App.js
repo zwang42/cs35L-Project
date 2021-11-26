@@ -1,44 +1,44 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Container } from "react-bootstrap";
 import Post from './Post'
-import {db } from './firebase';
+import { AuthProvider } from "./contexts/AuthContext.js";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import Login from "./pages/Login.js";
+import Homepage from "./pages/Homepage.js";
+import Signup from "./pages/Signup.js"
+import firebase from 'firebase/app';
+import "firebase/firestore";
+import "firebase/auth";
+
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function App() {
- /* const [posts, setPosts] = useState([
-    {
-      username:"testUser", 
-      caption:"This is caption. YEP. That it is. A caption.",
-      image: "https://cdna.artstation.com/p/assets/images/images/018/776/422/large/coax-22.jpg?1560694257",
-    },
-  ]);*/
+  const auth = firebase.auth();
 
-  useEffect(() => {
-    db.collection('posts').onSnapshot(snapshot => {
-      setPosts(snapshot.docs.map(doc => ({
-        id: doc.id,
-        post: doc.data()
-      })));
-    })
-  }, [posts])
-
+  const [user] = useAuthState(auth)
+  console.log(user); 
   return (
-    <div className="app">
-        <div className = "app__header">
-          <img
-            className = "app__headerImage"
-            src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png"
-            alt=""
-          />
-        </div>
+    <Container style = {{minHeight: "100vh", minWidth: "100vw", margin: 0, padding: 0, border: 0}} > 
+      <div className = "d-flex align-items-center justify-content-center"
+      style = {{ minHeight: "80vh" }}
+      >
 
-        {
-          posts.map(({id, post}) => (
-            <Post key={id} username={post.username} caption={post.caption} image={post.image} />
-          ))
-        }
+      <Router>
+          <AuthProvider>
+          <Switch>
+            <Route path = "/login" component = {Login} />
+            <Route path = "/signup" component = {Signup} />
 
-    </div>
+            <Route path="/">
+                {user ? <Redirect to="/profile"/> : <Redirect to="/login"/>}
+              </Route>
+          </Switch>
+          </AuthProvider>
+      </Router>
+      </div>
+	</Container>
   );
 }
 
