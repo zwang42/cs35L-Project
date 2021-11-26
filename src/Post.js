@@ -1,5 +1,5 @@
 import React from 'react'
-import './styles/Post.css'
+import '../src/styles/Post.css'
 
 function Post({username, image, caption}) {
     return (
