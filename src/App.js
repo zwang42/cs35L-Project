@@ -10,7 +10,7 @@ import Signup from "./pages/Signup.js"
 import firebase from 'firebase/app';
 import "firebase/firestore";
 import "firebase/auth";
-import '../src/app.css';
+import '../src/styles/App.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 function App() {
