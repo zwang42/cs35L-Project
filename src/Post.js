@@ -1,7 +1,7 @@
 import React from 'react'
-import './Post.css'
+import './styles/Post.css'
 
-function Post({username, caption, image}) {
+function Post({username, image, caption}) {
     return (
         <div className="post">
             <h3 className = "post__username">{username}</h3>
