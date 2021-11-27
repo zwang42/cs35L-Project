@@ -4,9 +4,6 @@ import { Container } from "react-bootstrap";
 import Post from './Post'
 import { AuthProvider } from "./contexts/AuthContext.js";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import Login from "./pages/Login.js";
-import Homepage from "./pages/Homepage.js";
-import Signup from "./pages/Signup.js"
 import firebase from 'firebase/app';
 import PrivateRoute from "./PrivateRoute.js";
 import "firebase/firestore";
@@ -14,11 +11,18 @@ import "firebase/auth";
 import '../src/styles/App.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
+// import pages
+import Login from "./pages/Login.js";
+import Homepage from "./pages/Homepage.js";
+import Signup from "./pages/Signup.js"
+import Profile from "./pages/Profile.js"
+
+
 function App() {
   const auth = firebase.auth();
 
   const [user] = useAuthState(auth)
-  console.log(user); 
+
   return (
     <Container style = {{minHeight: "100vh", minWidth: "100vw", margin: 0, padding: 0, border: 0}} > 
       <div className = "d-flex align-items-center justify-content-center"
@@ -31,6 +35,7 @@ function App() {
             <Route path = "/login" component = {Login} />
             <Route path = "/signup" component = {Signup} />
             <Route path = "/homepage" component = {Homepage} />
+            <PrivateRoute path = "/profile" component = {Profile} />
             <Route path="/">
                 {user ? <Redirect to="/profile"/> : <Redirect to="/login"/>}
               </Route>

@@ -30,6 +30,12 @@ export default function Signup() {
 				const account = {
 					uid: id,
 					bio: "",
+                                        mile: "",
+                                        squat: "",
+                                        bench: "",
+                                        deadlift: "",
+                                        ohp: "",
+                                        steps: ""
 				}
 			
 				const fs = firebase.firestore();
