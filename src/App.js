@@ -9,6 +9,7 @@ import Login from "./pages/Login.js";
 import Homepage from "./pages/Homepage.js";
 import Signup from "./pages/Signup.js"
 import firebase from 'firebase/app';
+import PrivateRoute from "./PrivateRoute.js";
 import "firebase/firestore";
 import "firebase/auth";
 
