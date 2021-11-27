@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-import '../styles/signup.css';
+import '../styles/login.css';
 
 export default function Signup() {
     const emailRef = useRef();
@@ -69,7 +69,7 @@ export default function Signup() {
                 </Form.Group>
 
                 <Button disabled = {loading} className = "w-100" type = "submit">Sign Up</Button>
-                <div className = "w-100 text-center mt-2">
+                <div className = "alt">
                     Already have an account? <Link to ="login">Log In</Link>
                 </div>
             </Form>
