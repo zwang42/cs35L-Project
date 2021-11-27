@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from "react-bootstrap";
 import Post from './Post'
 import { AuthProvider } from "./contexts/AuthContext.js";
@@ -13,9 +13,11 @@ import "firebase/firestore";
 import "firebase/auth";
 import '../src/styles/App.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import PrivateRoute from "./PrivateRoute.js";
 
 function App() {
   const auth = firebase.auth();
+
 
   const [user] = useAuthState(auth)
   console.log(user); 
@@ -30,9 +32,9 @@ function App() {
           <Switch>
             <Route path = "/login" component = {Login} />
             <Route path = "/signup" component = {Signup} />
-            <Route path = "/homepage" component = {Homepage} />
+            <PrivateRoute path = "/homepage" component = {Homepage} />
             <Route path="/">
-                {user ? <Redirect to="/profile"/> : <Redirect to="/login"/>}
+                {user ? <Redirect to="/homepage"/> : <Redirect to="/login"/>}
               </Route>
           </Switch>
           </AuthProvider>
