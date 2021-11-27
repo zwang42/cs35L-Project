@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-import '../styles/signup.css';
+import '../styles/login.css';
 
 export default function Signup() {
     const emailRef = useRef();
@@ -52,33 +52,33 @@ export default function Signup() {
 
     return (
         <div>
-            <Card style = {{ width: "400px" }}>
-                <Card.Body>
-                    <h2 className = "text-center mb-4">Sign Up</h2>
-                    {error && <Alert variant = "danger">{error}</Alert>}
-                    <Form onSubmit = {handleSubmit}>
-                        <Form.Group id = "email">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control type = "email" ref = {emailRef} required></Form.Control>
-                        </Form.Group>
-
-                        <Form.Group id = "password">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type = "password" ref = {passwordRef} required></Form.Control>
-                        </Form.Group>
-
-                        <Form.Group id = "password-confirm">
-                            <Form.Label>Confirm Password</Form.Label>
-                            <Form.Control type = "password" ref = {passwordConfirmRef} required></Form.Control>
-                        </Form.Group>
-
-                        <Button disabled = {loading} className = "w-100" type = "submit">Sign Up</Button>
-                    </Form>
-                </Card.Body>
-            </Card>
-            <div className = "w-100 text-center mt-2">
-                Already have an account? <Link to ="login">Log In</Link>
+            <div class="background">
+                <div class="topshape"></div>
+                <div class="topshape"></div>
             </div>
+            {error && <Alert variant = "danger">{error}</Alert>}
+            <Form onSubmit = {handleSubmit}>
+                <h1>FitnessGram Sign Up</h1>
+                <Form.Group id = "email">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type = "email" ref = {emailRef} required></Form.Control>
+                </Form.Group>
+
+                <Form.Group id = "password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type = "password" ref = {passwordRef} required></Form.Control>
+                </Form.Group>
+
+                <Form.Group id = "password-confirm">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control type = "password" ref = {passwordConfirmRef} required></Form.Control>
+                </Form.Group>
+
+                <Button disabled = {loading} className = "w-100" type = "submit">Sign Up</Button>
+                <div className = "alt">
+                    Already have an account? <Link to ="login">Log In</Link>
+                </div>
+            </Form>
         </div>
     )
 }
