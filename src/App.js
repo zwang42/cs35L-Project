@@ -10,7 +10,6 @@ import "firebase/firestore";
 import "firebase/auth";
 import '../src/styles/App.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import PrivateRoute from "./PrivateRoute.js";
 
 // import pages
 import Login from "./pages/Login.js";
