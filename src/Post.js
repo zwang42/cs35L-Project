@@ -1,16 +1,15 @@
 import React from 'react'
 import '../src/styles/Post.css'
 
-function Post({username, image, caption}) {
+export default function Post(props) {
     return (
         <div className="post">
-            <h3 className = "post__username">{username}</h3>
+            <h3 className = "post__username">{props.username}</h3>
 
-            <img className = "post__image" src ={image}/>
+            <img className = "post__image" src ={props.image}/>
 
-            <h4 className = "post__text"><strong>{username}:</strong> {caption}</h4>
+            <h4 className = "post__text"><strong>{props.username}:</strong> {props.caption}</h4>
         </div>
     )
 }
 
-export default Post
