@@ -32,15 +32,14 @@ export default function Profile(props) {
     let fs = firebase.firestore();
     let targetUid = props.match.params.userId;
 
-    console.log(targetUid);
 
     useEffect(() => {
         async function fetchData() {
         firebase.auth().onAuthStateChanged(function (user) {
             if (user != null) {
                 setUid(user.uid);
-                setIsUser(targetUid == uid ? true : false);
-                console.log(isUser); 
+                setIsUser(targetUid == user.uid ? true : false);
+                console.log(targetUid, user.uid, isUser); 
                 storage.ref("images").child("profile_pictures").child(targetUid).getDownloadURL().then(url => {
                     setImgUrl(url); 
                 }).catch(error => {
@@ -56,7 +55,6 @@ export default function Profile(props) {
                             data[field] = doc.get(MAP_NAME + '.' + field);                            
                         });
                         setUserData(data);
-                        console.log(userData);
                     });
                 })
 
@@ -70,6 +68,8 @@ export default function Profile(props) {
     const hiddenFileInput = React.useRef(null);
 
     const handleClick = event => {
+        if (!isUser)
+            return;
         hiddenFileInput.current.click();
     };
 
@@ -122,16 +122,18 @@ export default function Profile(props) {
 		    <OverlayTrigger
 			placement="top"
 			delay={{ show: 250, hide: 400 }}
-			overlay={<Tooltip id="button-tooltip-2">Click here to change your picture!</Tooltip>}
+                        overlay={<Tooltip id="button-tooltip-2">{isUser ? "Click here to change profile" : null}</Tooltip>}
 		    >
 		        <Button variant = "" onClick = {handleClick}><Image className="w-50 h-50" src={imgUrl}/></Button>
 		    </OverlayTrigger>
+                    {isUser &&
 		    <input
-			type="file"
+                        type={"file"}
 			ref={hiddenFileInput}
                         onChange={handleImageChange}
 			style={{display: 'none'}}
 		    />
+                    }
 
                     <ProfileInput label="Mile time" placeholder="8:00" field="mile" val={userData.mile} onChange ={inputChange} readOnly = {isUser} />
                     <ProfileInput label="Squat" placeholder="135" field="squat" val={userData.squat} onChange = {inputChange} readOnly={isUser} />
