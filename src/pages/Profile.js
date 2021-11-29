@@ -27,6 +27,7 @@ export default function Profile(props) {
     const [imgUrl, setImgUrl] = useState("");
     const [userData, setUserData] = useState({});
     const [isUser, setIsUser] = useState(false);
+    const [isFollowing, setFollowing] = useState(false);
 
     let storage = firebase.storage();
     let fs = firebase.firestore();
@@ -39,7 +40,14 @@ export default function Profile(props) {
             if (user != null) {
                 setUid(user.uid);
                 setIsUser(targetUid == user.uid ? true : false);
-                console.log(targetUid, user.uid, isUser); 
+
+                // check if we are currently following the profile that we are on
+                fs.collection("following").doc(user.uid).get().then(doc => {
+                    let followingUsers = doc.data().following;
+                    console.log(followingUsers, targetUid);
+                    setFollowing(followingUsers.includes(targetUid) ? true : false);
+                });
+
                 storage.ref("images").child("profile_pictures").child(targetUid).getDownloadURL().then(url => {
                     setImgUrl(url); 
                 }).catch(error => {
@@ -65,6 +73,7 @@ export default function Profile(props) {
         fetchData();
     }, []);
     
+    // BEGIN FILE UPLOAD FUNCTIONS
     const hiddenFileInput = React.useRef(null);
 
     const handleClick = event => {
@@ -92,7 +101,10 @@ export default function Profile(props) {
             })
 	}
     }
-
+    // END FILE UPLOAD FUNCTIONS
+    
+    
+    // Handle changing the input boxes
     const inputChange = (event, targetField) => {
         event.preventDefault();
 
@@ -101,6 +113,7 @@ export default function Profile(props) {
         setUserData(clonedObject);
     }
 
+    // Save the input data to firebase
     const onSave = (event) => {
         event.preventDefault();
 
@@ -110,6 +123,24 @@ export default function Profile(props) {
                 users.doc(doc.id).set({ userData });
             });
         })
+    }
+
+    // follow or unfollow a user
+    const changeFollow = (event) => {
+        // if we are following then unfollow
+        if (isFollowing) {
+            fs.collection("following").doc(uid).update({
+                following: firebase.firestore.FieldValue.arrayRemove(targetUid) 
+            });
+        }
+
+        // if we are not then following them
+        else {
+            fs.collection("following").doc(uid).update({
+                following: firebase.firestore.FieldValue.arrayUnion(targetUid)
+            });
+        }
+        setFollowing(!isFollowing);
     }
 
 
@@ -141,6 +172,12 @@ export default function Profile(props) {
                     <ProfileInput label="Deadlift" placeholder="135" field="deadlift" val={userData.deadlift} onChange = {inputChange} readOnly={isUser} />
                     <ProfileInput label="Overhead Press" placeholder="135" field="ohp" val={userData.ohp} onChange = {inputChange} readOnly={isUser} />
                     <ProfileInput label="Steps per day" placeholder="10000" field="steps" val={userData.steps} onChange = {inputChange} readOnly={isUser}/>
+
+                    {!isUser &&
+                    <Button variant="primary" onClick = {changeFollow} >
+                        {isFollowing ? "Unfollow" : "Follow"}
+                    </Button>
+                    }
 
                     {isUser && 
                     <Button variant="primary" type="submit" onClick = {onSave} >
