@@ -22,37 +22,39 @@ const DEFAULT_PICTURE = "https://firebasestorage.googleapis.com/v0/b/lproject-1b
 const DATA_FIELDS = ["mile", "squat", "bench", "deadlift", "ohp", "steps"];
 const MAP_NAME = "userData";
 
-export default function Profile() {
+export default function Profile(props) {
     const [uid, setUid] = useState("");
     const [imgUrl, setImgUrl] = useState("");
     const [userData, setUserData] = useState({});
+    const [isUser, setIsUser] = useState(false);
 
     let storage = firebase.storage();
     let fs = firebase.firestore();
+    let targetUid = props.match.params.userId;
+
 
     useEffect(() => {
         async function fetchData() {
         firebase.auth().onAuthStateChanged(function (user) {
             if (user != null) {
                 setUid(user.uid);
-                
-                storage.ref("images").child("profile_pictures").child(user.uid).getDownloadURL().then(url => {
+                setIsUser(targetUid == user.uid ? true : false);
+                console.log(targetUid, user.uid, isUser); 
+                storage.ref("images").child("profile_pictures").child(targetUid).getDownloadURL().then(url => {
                     setImgUrl(url); 
                 }).catch(error => {
                     // if there doesn't exist such a file then user doens't have profile picture yet
                     setImgUrl(DEFAULT_PICTURE);
                 });
 
-                console.log(user.uid);
                 // get some userdata 
-                fs.collection("users").where("userData.uid", "==", user.uid).get().then(function (querySnapshot) {
+                fs.collection("users").where("userData.uid", "==", targetUid).get().then(function (querySnapshot) {
                     querySnapshot.forEach(function (doc) {
                         let data = {"uid": user.uid};
                         DATA_FIELDS.forEach(function (field) {
                             data[field] = doc.get(MAP_NAME + '.' + field);                            
                         });
                         setUserData(data);
-                        console.log(userData);
                     });
                 })
 
@@ -66,6 +68,8 @@ export default function Profile() {
     const hiddenFileInput = React.useRef(null);
 
     const handleClick = event => {
+        if (!isUser)
+            return;
         hiddenFileInput.current.click();
     };
 
@@ -118,28 +122,31 @@ export default function Profile() {
 		    <OverlayTrigger
 			placement="top"
 			delay={{ show: 250, hide: 400 }}
-			overlay={<Tooltip id="button-tooltip-2">Click here to change your picture!</Tooltip>}
+                        overlay={<Tooltip id="button-tooltip-2">{isUser ? "Click here to change profile" : null}</Tooltip>}
 		    >
 		        <Button variant = "" onClick = {handleClick}><Image className="w-50 h-50" src={imgUrl}/></Button>
 		    </OverlayTrigger>
+                    {isUser &&
 		    <input
-			type="file"
+                        type={"file"}
 			ref={hiddenFileInput}
                         onChange={handleImageChange}
 			style={{display: 'none'}}
 		    />
+                    }
 
-                    <ProfileInput label="Mile time" placeholder="8:00" field="mile" val={userData.mile} onChange ={inputChange} />
-                    <ProfileInput label="Squat" placeholder="135" field="squat" val={userData.squat} onChange = {inputChange} />
-                    <ProfileInput label="Bench Press" placeholder="135" field="bench" val={userData.bench} onChange = {inputChange} />
-                    <ProfileInput label="Deadlift" placeholder="135" field="deadlift" val={userData.deadlift} onChange = {inputChange} />
-                    <ProfileInput label="Overhead Press" placeholder="135" field="ohp" val={userData.ohp} onChange = {inputChange} />
-                    <ProfileInput label="Steps per day" placeholder="10000" field="steps" val={userData.steps} onChange = {inputChange} />
+                    <ProfileInput label="Mile time" placeholder="8:00" field="mile" val={userData.mile} onChange ={inputChange} readOnly = {isUser} />
+                    <ProfileInput label="Squat" placeholder="135" field="squat" val={userData.squat} onChange = {inputChange} readOnly={isUser} />
+                    <ProfileInput label="Bench Press" placeholder="135" field="bench" val={userData.bench} onChange = {inputChange} readOnly={isUser} />
+                    <ProfileInput label="Deadlift" placeholder="135" field="deadlift" val={userData.deadlift} onChange = {inputChange} readOnly={isUser} />
+                    <ProfileInput label="Overhead Press" placeholder="135" field="ohp" val={userData.ohp} onChange = {inputChange} readOnly={isUser} />
+                    <ProfileInput label="Steps per day" placeholder="10000" field="steps" val={userData.steps} onChange = {inputChange} readOnly={isUser}/>
 
-
+                    {isUser && 
                     <Button variant="primary" type="submit" onClick = {onSave} >
                         Save
                     </Button>
+                    }
 		    </div>
 			</Form>
 	        </div>
