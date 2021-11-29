@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProfileInput from './ProfileInput.js';
+import '../styles/profile.css'
 
 // firebase imports
 import firebase from 'firebase/app';
@@ -108,41 +109,66 @@ export default function Profile() {
         })
     }
 
-
     return (
-	    <Container className="d-flex justify-content-center align-items-center min-vh-100">
-	        <div className="w-75 h-80">
-		    <h3 className="text-center py-3">Profile</h3>
-                    <Form>
-		    <div className="d-flex justify-content-center">
-		    <OverlayTrigger
-			placement="top"
-			delay={{ show: 250, hide: 400 }}
-			overlay={<Tooltip id="button-tooltip-2">Click here to change your picture!</Tooltip>}
-		    >
-		        <Button variant = "" onClick = {handleClick}><Image className="w-50 h-50" src={imgUrl}/></Button>
-		    </OverlayTrigger>
-		    <input
-			type="file"
-			ref={hiddenFileInput}
-                        onChange={handleImageChange}
-			style={{display: 'none'}}
-		    />
+	    <div class = "container">
+            <Form>
+            <div class="profile-image">
+            <OverlayTrigger placement="top" delay={{ show: 150, hide: 100 }} overlay={<Tooltip id="button-tooltip-2">Click here to change your picture!</Tooltip>}>
+                <Button variant = "" onClick = {handleClick}><img class="resize" src={imgUrl}/></Button>
+			</OverlayTrigger>
 
-                    <ProfileInput label="Mile time" placeholder="8:00" field="mile" val={userData.mile} onChange ={inputChange} />
-                    <ProfileInput label="Squat" placeholder="135" field="squat" val={userData.squat} onChange = {inputChange} />
-                    <ProfileInput label="Bench Press" placeholder="135" field="bench" val={userData.bench} onChange = {inputChange} />
-                    <ProfileInput label="Deadlift" placeholder="135" field="deadlift" val={userData.deadlift} onChange = {inputChange} />
-                    <ProfileInput label="Overhead Press" placeholder="135" field="ohp" val={userData.ohp} onChange = {inputChange} />
-                    <ProfileInput label="Steps per day" placeholder="10000" field="steps" val={userData.steps} onChange = {inputChange} />
+			</div>
+            <h1 class="profile-user-name">username</h1>
+            <div class="profile-stats">
+				<ul>
+					<li><span class="profile-stat-count">0</span> posts</li>
+					<li><span class="profile-stat-count">0</span> followers</li>
+					<li><span class="profile-stat-count">0</span> following</li>
+				</ul>
+			</div>
+    
+            <div class = "in">
+                <input type="file" ref={hiddenFileInput} onChange={handleImageChange} style={{display: 'none'}}/>
+                        <ProfileInput label="Mile time" placeholder="8:00" field="mile" val={userData.mile} onChange ={inputChange} />
+                        <ProfileInput label="Squat" placeholder="135" field="squat" val={userData.squat} onChange = {inputChange} />
+                        <ProfileInput label="Bench Press" placeholder="135" field="bench" val={userData.bench} onChange = {inputChange} />
+                        <ProfileInput label="Deadlift" placeholder="135" field="deadlift" val={userData.deadlift} onChange = {inputChange} />
+                        <ProfileInput label="Overhead Press" placeholder="135" field="ohp" val={userData.ohp} onChange = {inputChange} />
+                        <ProfileInput label="Steps per day" placeholder="10000" field="steps" val={userData.steps} onChange = {inputChange} />
+                        <Button class = "button" type="submit" onClick = {onSave}>Save</Button>
+            </div>
+            </Form>
+                <div class="gallery">
+                    <div class="gallery-item" tabindex="0">
+                        <img src="https://picsum.photos/500" class="gallery-image" alt=""></img>
+                        <div class="gallery-item-info">
+                            <ul>
+                                <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>0</li>
+                                <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>0</li>
+                            </ul>
+                        </div>
+                    </div>
 
-
-                    <Button variant="primary" type="submit" onClick = {onSave} >
-                        Save
-                    </Button>
-		    </div>
-			</Form>
-	        </div>
-	    </Container>
+                    <div class="gallery-item" tabindex="0">
+                        <img src="https://picsum.photos/500" class="gallery-image" alt=""></img>
+                        <div class="gallery-item-info">
+                            <ul>
+                                <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>0</li>
+                                <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>0</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="gallery-item" tabindex="0">
+                        <img src="https://picsum.photos/500" class="gallery-image" alt=""></img>
+                        <div class="gallery-item-info">
+                            <ul>
+                                <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>0</li>
+                                <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>0</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+	    </div>
 	);
 }
+
