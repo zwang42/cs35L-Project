@@ -6,6 +6,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/storage';
 import 'firebase/firestore';
+import {storage, db, auth} from "../firebase.js"
 
 import ImageUpload from './ImageUpload.js'
 import {Link} from 'react-router-dom'
@@ -21,6 +22,7 @@ export default function Homepage(curr) {
 
     useEffect(() => {
          // get posts from user with id and update the posts state
+        setUser(auth.currentUser);
         function fetchPosts(id) {
              fs.collection("posts").doc(id).collection("userPosts").get().then((snapshot) => {
                   snapshot.forEach(function (doc) {
@@ -61,7 +63,7 @@ export default function Homepage(curr) {
     let displayPost = [];
 
     posts.forEach((p, id) => {
-        displayPost.push(<Post key = {id} caption = {p.caption} image = {p.imageUrl} />);
+        displayPost.push(<Post key = {id} postId={id} user={user} caption = {p.caption} image = {p.imageUrl} />);
     });
     console.log(displayPost);
 
@@ -78,11 +80,15 @@ export default function Homepage(curr) {
             {user?.displayName ? (<div> {user.displayName} </div>):<div> No name </div>}
             {user ? (<ImageUpload username={user.displayName}/>):
             (<Link to= "/Login" className ="btn btn-primary">Login</Link>)}
-            (<div />)}
             {displayPost}
                  
     
         </div>
       );
     }
+    
+
+    
+
+
     
