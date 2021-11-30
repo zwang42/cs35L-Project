@@ -40,8 +40,9 @@ function ImageUpload({username}) {
                             caption: caption,
                             imageUrl: url,
                             username: username,
-                            uid: auth.currentUser.uid
-
+                            uid: auth.currentUser.uid,
+                            likes: [],
+                            comments: []
                         });
 
                         setCaption("");

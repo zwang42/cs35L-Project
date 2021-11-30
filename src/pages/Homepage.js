@@ -17,39 +17,40 @@ export default function Homepage(curr) {
     const [posts, setPosts] = useState([]);
     //const authUser = auth.currentUser;
     const [user, setUser] = useState(null);
+    const [likes, setLikes] = useState({});
+    const [uid, setUid] = useState();
 
     let fs = firebase.firestore();
 
     useEffect(() => {
-         // get posts from user with id and update the posts state
-        setUser(auth.currentUser);
-        function fetchPosts(id) {
-             fs.collection("posts").doc(id).collection("userPosts").get().then((snapshot) => {
-                  snapshot.forEach(function (doc) {
-                      let clonedPost = JSON.parse(JSON.stringify(posts));
-                      clonedPost.push(doc.data());
-                      setPosts(clonedPost);
-                      console.log(posts);
-                  });
-             });
-         }
-
         // main routine to get posts from ourselves and people we follow
          async function fetchData() {
             firebase.auth().onAuthStateChanged( function (user) {
                 if (user != null) {
-                    
+                    setUid(user.uid); 
+                    setUser(user);
                     // retrieve posts from people we follow
                     fs.collection("following").doc(user.uid).get().then((doc) => {
                         let followingUsers = doc.data().following;
                         followingUsers.push(user.uid);
-
                         fs.collectionGroup("posts").where("uid", 'in', followingUsers).get().then((snapshot) => {
                             let p = [];
+                            let likesObj = {};
+
                             snapshot.forEach((doc) => {
-                                p.push(doc.data());
+                                let tempPost = doc.data();
+                                if (tempPost.likes.includes(user.uid)) {
+                                    likesObj[doc.id] = true;
+                                }
+
+                                else {
+                                    likesObj[doc.id] = false;
+                                }
+                                tempPost["postId"] = doc.id;
+                                p.push(tempPost);
                             });
                             setPosts(p);
+                            setLikes(likesObj);
                         });
                     });
                 }
@@ -59,13 +60,30 @@ export default function Homepage(curr) {
         fetchData();
     }, []);
 
+    const likePost = (postId) => {
+        let clonedLikes = {...likes};
+        if (clonedLikes[postId]) {
+            fs.collection("posts").doc(postId).update({
+                likes: firebase.firestore.FieldValue.arrayRemove(user.uid)
+            });
+            clonedLikes[postId] = false;
+        }
 
+        else {
+            fs.collection("posts").doc(postId).update({
+                likes: firebase.firestore.FieldValue.arrayUnion(user.uid)
+            });
+            clonedLikes[postId] = true;
+        }
+        setLikes(clonedLikes);
+    }
     let displayPost = [];
 
     posts.forEach((p, id) => {
-        displayPost.push(<Post key = {id} postId={id} user={user} caption = {p.caption} image = {p.imageUrl} />);
+        displayPost.push(<Post key = {id} postId={p.postId} likes={p.likes} likedStatus = {likes[p.postId]} onLike = {likePost} user={user} caption = {p.caption} image = {p.imageUrl} />);
     });
-    console.log(displayPost);
+
+    console.log(user);
 
     return (
         <div className="home">
@@ -81,7 +99,6 @@ export default function Homepage(curr) {
             {user ? (<ImageUpload username={user.displayName}/>):
             (<Link to= "/Login" className ="btn btn-primary">Login</Link>)}
             {displayPost}
-                 
     
         </div>
       );
