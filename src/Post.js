@@ -1,14 +1,34 @@
-import React, { useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import '../src/styles/Post.css'
+import firebase from 'firebase/app'
+import 'firebase/firestore';
 
 export default function Post(props) {
     // sloppy workaround but works...
     const [likes, setLikes] = useState(props.likes);
     const [numLikes, setNumLikes] = useState(props.likes.length);
     const [comment, setComment] = useState("");
+    const [comments, setComments] = useState([]);
+    
+    useEffect(() => {
+        let unsubscribe;
+        if (props.postId) {
+          unsubscribe = firebase.firestore()
+            .collection("posts")
+            .doc(props.postId)
+            .collection("comments")
+            .onSnapshot((snapshot) => {
+              setComments(snapshot.docs.map((doc) => doc.data()));
+            });
+        }
+  
+        return () => {
+          unsubscribe();
+        };
+      }, [props.postId]);
 
     const onLike = () => {
         props.onLike(props.postId);
@@ -47,6 +67,13 @@ export default function Post(props) {
                 </Button>
             </InputGroup>
             <h4 className = "post__text"><strong>{props.username}:</strong> {props.caption}</h4>
+            <div className="post__comments">
+          {comments.map((comment) => (
+            <p>
+              <b>{comment.username}</b> {comment.text}
+            </p>
+          ))}
+        </div>
         </div>
     )
 }

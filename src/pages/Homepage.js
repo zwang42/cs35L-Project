@@ -38,6 +38,7 @@ export default function Homepage(curr) {
                             let likesObj = {};
 
                             snapshot.forEach((doc) => {
+                                //if(followingUsers.includes((String(doc.data().uid)))){
                                 let tempPost = doc.data();
                                 if (tempPost.likes.includes(user.uid)) {
                                     likesObj[doc.id] = true;
@@ -47,7 +48,7 @@ export default function Homepage(curr) {
                                     likesObj[doc.id] = false;
                                 }
                                 tempPost["postId"] = doc.id;
-                                p.push(tempPost);
+                                p.push(tempPost);//}
                             });
                             setPosts(p);
                             setLikes(likesObj);
@@ -78,18 +79,31 @@ export default function Homepage(curr) {
         setLikes(clonedLikes);
     }
 
-    const commentPost = (comment, postId) => {
+    /*const commentPost = (comment, postId) => {
         fs.collection("posts").doc(postId).update({
             comments: firebase.firestore.FieldValue.arrayUnion({uid: user.uid, content: comment})
         });
+    }*/
+
+    const commentPost = (comment, postId) => {
+        fs.collection("posts").doc(postId).collection("comments").add({
+            text:comment,
+            username: user.displayName
+        })
+    }
+
+    const orderPosts = (posts) => {
+
     }
 
     let displayPost = [];
 
     posts.forEach((p, id) => {
-        displayPost.push(<Post key = {id} postId={p.postId} likes={p.likes} likedStatus = {likes[p.postId]} onLike = {likePost} onComment = {commentPost} user={user} caption = {p.caption} image = {p.imageUrl} />);
+        displayPost.push(<Post key = {id} postId={p.postId} timestamp={p.timestamp} likes={p.likes} likedStatus = {likes[p.postId]} onLike = {likePost} onComment = {commentPost} user={user} caption = {p.caption} image = {p.imageUrl} />);
     });
-
+    /*displayPost.sort(function(y, x){
+        return x.timestamp - y.timestamp;
+    })*/
     console.log(user);
 
     return (
@@ -105,6 +119,7 @@ export default function Homepage(curr) {
             {user?.displayName ? (<div> {user.displayName} </div>):<div> No name </div>}
             {user ? (<ImageUpload username={user.displayName}/>):
             (<Link to= "/Login" className ="btn btn-primary">Login</Link>)}
+            {user ? (<button onClick={() => auth.signOut()}>Logout</button>) : <div/>}
             {displayPost}
     
         </div>
