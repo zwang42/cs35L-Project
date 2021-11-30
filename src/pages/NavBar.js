@@ -42,7 +42,7 @@ export default function NavBar(props) {
           <Navbar.Text>
             {props.user.displayName ? <div> {props.user.displayName} </div> : <div> No name </div>}
           </Navbar.Text>
-          <Nav.Link href='/profile/:userId'>Profile</Nav.Link>
+          <Nav.Link href={'/profile/' + props.user.uid}>Profile</Nav.Link>
           <Navbar.Text onClick={() => auth.signOut()}>Signout</Navbar.Text>
           
         </Nav>
