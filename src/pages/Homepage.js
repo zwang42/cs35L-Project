@@ -77,10 +77,17 @@ export default function Homepage(curr) {
         }
         setLikes(clonedLikes);
     }
+
+    const commentPost = (comment, postId) => {
+        fs.collection("posts").doc(postId).update({
+            comments: firebase.firestore.FieldValue.arrayUnion({uid: user.uid, content: comment})
+        });
+    }
+
     let displayPost = [];
 
     posts.forEach((p, id) => {
-        displayPost.push(<Post key = {id} postId={p.postId} likes={p.likes} likedStatus = {likes[p.postId]} onLike = {likePost} user={user} caption = {p.caption} image = {p.imageUrl} />);
+        displayPost.push(<Post key = {id} postId={p.postId} likes={p.likes} likedStatus = {likes[p.postId]} onLike = {likePost} onComment = {commentPost} user={user} caption = {p.caption} image = {p.imageUrl} />);
     });
 
     console.log(user);
