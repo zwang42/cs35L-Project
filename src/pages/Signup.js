@@ -53,6 +53,10 @@ export default function Signup() {
 
     return (
         <div>
+            <div class="background">
+                <div class="topshape"></div>
+                <div class="topshape"></div>
+            </div>
             {error && <Alert variant = "danger">{error}</Alert>}
             <form onSubmit = {handleSubmit}>
                 <h1>FitnessGram Sign Up</h1>

@@ -29,6 +29,10 @@ export default function Login() {
     }
     return (
         <div>
+            <div class="background">
+                <div class="topshape"></div>
+                <div class="topshape"></div>
+            </div>
             {error && <Alert variant = "danger">{error}</Alert>}
             <Form onSubmit = {handleSubmit}>
                 <h1>FitnessGram Login</h1>

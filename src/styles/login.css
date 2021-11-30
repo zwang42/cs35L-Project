@@ -53,8 +53,8 @@ body{
     top: 50%;
 }
 .background .topshape{
-    height: 130px;
-    width: 620px;
+    height: 630px;
+    width: 120px;
     position: absolute;
 }
 .topshape:first-child{
@@ -62,7 +62,7 @@ body{
         #dde7ec,
         #7dc7ec
     );
-    left: -50px;
+    left: -250px;
     top: -100px;
 }
 .topshape:last-child{
@@ -71,7 +71,7 @@ body{
         #dde7ec
     );
     bottom: -100px;
-    right: -30px;
+    right: -250px;
 }
 form{
     height: 600px;
