@@ -2,13 +2,24 @@ import React, { useState, useEffect } from 'react'
 import { db, auth } from "../firebase.js"
 import { Navbar, Nav, Container } from 'react-bootstrap'
 import Select from 'react-select'
+import { useHistory } from 'react-router-dom'
 
 export default function NavBar(props) {
   const [selectedSearch, setSearch] = useState(null);
   const [userList, setUserList] = useState([]);
-  const handleChange = () => {
-    setSearch(selectedSearch)
+  const history = useHistory();
+  const handleChange = (selectedSearch) => {
+    setSearch(selectedSearch);
+    let page = '/profile/' + selectedSearch.id;
+    //console.log(page);
+    history.push(page);
   }
+
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ];
 
   useEffect(() => {
     db.collection("users").onSnapshot(snapshot => {
@@ -34,8 +45,7 @@ export default function NavBar(props) {
           value={selectedSearch}
           options={userList}
           onChange={handleChange}
-          placeholder="Search..."
-          openMenuOnClick={false} />
+          placeholder="Search..." />
       </Nav>
       {props.user ? (
         <Nav className="ms-auto">
