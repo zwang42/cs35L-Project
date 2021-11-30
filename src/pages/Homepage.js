@@ -1,6 +1,7 @@
 import '../styles/homepage.css';
 import React, {useState, useEffect} from 'react';
 import Post from '../Post.js'
+import NavBar from './NavBar.js'
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -69,15 +70,7 @@ export default function Homepage(curr) {
 
     return (
         <div className="home">
-          
-            <div className = "home__header">
-              <img
-                className = "home__headerImage"
-                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png"
-                alt=""
-              />
-            </div>
-            {user?.displayName ? (<div> {user.displayName} </div>):<div> No name </div>}
+            <NavBar user={user}></NavBar>
             {user ? (<ImageUpload username={user.displayName}/>):
             (<Link to= "/Login" className ="btn btn-primary">Login</Link>)}
             {displayPost}
