@@ -179,56 +179,43 @@ export default function Profile(props) {
     }
 
     return (
-        <Container className="d-flex justify-content-center align-items-center min-vh-100">
-                <div className="w-75 h-80">
-		    <h3 className="text-center py-3">Profile</h3>
-                    <Form>
-		    <div className="d-flex justify-content-center">
-		    <OverlayTrigger
-			placement="top"
-			delay={{ show: 250, hide: 400 }}
-                        overlay={<Tooltip id="button-tooltip-2">{isUser ? "Click here to change profile" : null}</Tooltip>}
-		    >
-		        <Button variant = "" onClick = {handleClick}><Image className="w-50 h-50" src={imgUrl}/></Button>
+        <div class="container">
+            <div class = "portion">
+		    <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip-2">{isUser ? "Click here to change profile" : null}</Tooltip>}>
+		        <Button variant = "" onClick = {handleClick}><img src={imgUrl}/></Button>
 		    </OverlayTrigger>
-                    {isUser &&
-		    <input
-                        type={"file"}
-			ref={hiddenFileInput}
-                        onChange={handleImageChange}
-			style={{display: 'none'}}
-		    />
-                    }
-                    <Card onClick = {getFollowing}>
-                        <Card.Title>Following</Card.Title>
-                        <Card.Body>{numFollowing}</Card.Body>
-                    </Card>
-                    <Card onClick = {getFollowers} >
-                        <Card.Title>Followers</Card.Title>
-                        <Card.Body>{numFollowers}</Card.Body>
-                    </Card>
+            {isUser && <input type={"file"} ref={hiddenFileInput} onChange={handleImageChange} style={{display: 'none'}}/>}
+                <div class="profile-stats">
+                    <ul>
+                        <div onClick = {getFollowers}>
+                            <li><span class="profile-stat-count">{numFollowers}</span>Followers</li>
+                        </div>
+                        <div onClick = {getFollowing}>
+                            <li><span class="profile-stat-count">{numFollowing}</span>Following</li>
+                        </div>
+                    </ul>
+			    </div>
+                <Form>
+                <h1>Profile</h1>
+                <div class = "in">
                     <ProfileInput label="Mile time" placeholder="8:00" field="mile" val={userData.mile} onChange ={inputChange} readOnly = {isUser} />
                     <ProfileInput label="Squat" placeholder="135" field="squat" val={userData.squat} onChange = {inputChange} readOnly={isUser} />
                     <ProfileInput label="Bench Press" placeholder="135" field="bench" val={userData.bench} onChange = {inputChange} readOnly={isUser} />
                     <ProfileInput label="Deadlift" placeholder="135" field="deadlift" val={userData.deadlift} onChange = {inputChange} readOnly={isUser} />
                     <ProfileInput label="Overhead Press" placeholder="135" field="ohp" val={userData.ohp} onChange = {inputChange} readOnly={isUser} />
                     <ProfileInput label="Steps per day" placeholder="10000" field="steps" val={userData.steps} onChange = {inputChange} readOnly={isUser}/>
-
-                    {!isUser &&
-                    <Button variant="primary" onClick = {changeFollow} >
-                        {isFollowing ? "Unfollow" : "Follow"}
-                    </Button>
-                    }
-
-                    {isUser && 
-                    <Button variant="primary" type="submit" onClick = {onSave} >
-                        Save
-                    </Button>
-                    }
-		    </div>
-			</Form>
-	        </div>
+                </div>
+                {isUser && 
+                <button class = "alt" variant="primary" type="submit" onClick = {onSave}>Save</button>
+                }
+                {!isUser &&
+                <button class="flw" variant="primary" onClick = {changeFollow}>
+                    {isFollowing ? "Unfollow" : "Follow"}
+                </button>
+                }
+                </Form>
                 <UserModal users={users} handleClose={disableModal} status={modalStatus} />
-	    </Container>
+                </div>
+        </div>
 	);
 }
