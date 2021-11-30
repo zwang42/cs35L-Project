@@ -69,15 +69,16 @@ export default function Profile(props) {
                 });
 
                 // get some userdata 
-                fs.collection("users").where("userData.uid", "==", targetUid).get().then(function (querySnapshot) {
-                    querySnapshot.forEach(function (doc) {
-                        let data = {"uid": user.uid};
-                        DATA_FIELDS.forEach(function (field) {
-                            data[field] = doc.get(MAP_NAME + '.' + field);                            
-                        });
-                        setUserData(data);
+                fs.collection("users").doc(targetUid).get().then(doc => {
+                    let data = {"uid": targetUid};
+                    DATA_FIELDS.forEach(function (field) {
+                        data[field] = doc.get(MAP_NAME + '.' + field);
+                        if (!data[field]) {
+                            data[field] = "";
+                        }
                     });
-                })
+                    setUserData(data);
+                });
 
                 }
             });
@@ -129,13 +130,7 @@ export default function Profile(props) {
     // Save the input data to firebase
     const onSave = (event) => {
         event.preventDefault();
-
-        const users = fs.collection("users");
-        users.where("userData.uid", "==", uid).get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                users.doc(doc.id).set({ userData });
-            });
-        })
+        fs.collection("users").doc(uid).set({ userData });
     }
 
     // follow or unfollow a user
