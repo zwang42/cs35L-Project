@@ -58,7 +58,7 @@ export default function Signup() {
                 <div class="topshape"></div>
             </div>
             {error && <Alert variant = "danger">{error}</Alert>}
-            <Form onSubmit = {handleSubmit}>
+            <form onSubmit = {handleSubmit}>
                 <h1>FitnessGram Sign Up</h1>
                 <Form.Group id = "email">
                     <Form.Label>Email</Form.Label>
@@ -75,11 +75,11 @@ export default function Signup() {
                     <Form.Control type = "password" ref = {passwordConfirmRef} required></Form.Control>
                 </Form.Group>
 
-                <Button disabled = {loading} className = "w-100" type = "submit">Sign Up</Button>
-                <div className = "alt">
-                    Already have an account? <Link to ="login">Log In</Link>
+                <button class="action" disabled = {loading} type = "submit">Sign Up</button>
+                <div className = "log">
+                    Already have an account? <Link to ="login">Log In</Link> 
                 </div>
-            </Form>
+            </form>
         </div>
     )
 }
