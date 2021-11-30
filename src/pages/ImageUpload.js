@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {storage, db, auth} from "../firebase.js"
+import firebase from 'firebase'
 
 import {Button} from 'react-native'
 function ImageUpload({username}) {
@@ -34,11 +35,12 @@ function ImageUpload({username}) {
                     .child(image.name)
                     .getDownloadURL()
                     .then(url => {
-                        db.collection("posts").doc(auth.currentUser.uid).collection("userPosts").add({
-                            //timestamp: db.FieldValue.serverTimestamp(),
+                        db.collection("posts").add({
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                             caption: caption,
                             imageUrl: url,
-                            username: username
+                            username: username,
+                            uid: auth.currentUser.uid
 
                         });
 

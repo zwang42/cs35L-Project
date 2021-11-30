@@ -1,40 +1,73 @@
 import '../styles/homepage.css';
 import React, {useState, useEffect} from 'react';
 import Post from '../Post.js'
-import {db, auth} from '../firebase.js'
+
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/storage';
+import 'firebase/firestore';
+import {storage, db, auth} from "../firebase.js"
+
 import ImageUpload from './ImageUpload.js'
 import {Link} from 'react-router-dom'
 import { AuthProvider } from "../contexts/AuthContext.js";
 import {Button} from 'react-native'
 
-function Homepage(curr) {
+export default function Homepage(curr) {
     const [posts, setPosts] = useState([]);
-    const authUser = auth.currentUser;
+    //const authUser = auth.currentUser;
     const [user, setUser] = useState(null);
-    useEffect(() => {
-      if(!!authUser)
-        db.collection('posts').doc(authUser.uid).collection("userPosts").orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-          setPosts(snapshot.docs.map(doc => ({
-            id: doc.id,
-            post: doc.data()
-          })));
-        })
-      }, [posts])
-    useEffect(() => {
-      const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      if (authUser){
-        console.log(authUser)
-        setUser(authUser)
-      } else {
-        setUser(null);
-      }
-    })
 
-    return () => {
-      unsubscribe();
-    }
-  }, [user]);
-      return (
+    let fs = firebase.firestore();
+
+    useEffect(() => {
+         // get posts from user with id and update the posts state
+        setUser(auth.currentUser);
+        function fetchPosts(id) {
+             fs.collection("posts").doc(id).collection("userPosts").get().then((snapshot) => {
+                  snapshot.forEach(function (doc) {
+                      let clonedPost = JSON.parse(JSON.stringify(posts));
+                      clonedPost.push(doc.data());
+                      setPosts(clonedPost);
+                      console.log(posts);
+                  });
+             });
+         }
+
+        // main routine to get posts from ourselves and people we follow
+         async function fetchData() {
+            firebase.auth().onAuthStateChanged( function (user) {
+                if (user != null) {
+                    
+                    // retrieve posts from people we follow
+                    fs.collection("following").doc(user.uid).get().then((doc) => {
+                        let followingUsers = doc.data().following;
+                        followingUsers.push(user.uid);
+
+                        fs.collectionGroup("posts").where("uid", 'in', followingUsers).get().then((snapshot) => {
+                            let p = [];
+                            snapshot.forEach((doc) => {
+                                p.push(doc.data());
+                            });
+                            setPosts(p);
+                        });
+                    });
+                }
+            });
+         }
+
+        fetchData();
+    }, []);
+
+
+    let displayPost = [];
+
+    posts.forEach((p, id) => {
+        displayPost.push(<Post key = {id} postId={id} user={user} caption = {p.caption} image = {p.imageUrl} />);
+    });
+    console.log(displayPost);
+
+    return (
         <div className="home">
           
             <div className = "home__header">
@@ -47,23 +80,15 @@ function Homepage(curr) {
             {user?.displayName ? (<div> {user.displayName} </div>):<div> No name </div>}
             {user ? (<ImageUpload username={user.displayName}/>):
             (<Link to= "/Login" className ="btn btn-primary">Login</Link>)}
-            {user ? (<button onClick={() => auth.signOut()}>Logout
-            </button>):
-            (<div />)}
-            
-            {
-              posts.map(({id, post}) => (
-                <Post key={id} username={post.username} caption={post.caption} image={post.imageUrl} />
-              ))
-            }
-            {
-              posts.map(({id, post}) => (
-                <div key={id}> username={post.username} caption={post.caption} image={post.imageUrl} </div>
-              ))
-            }
+            {displayPost}
+                 
     
         </div>
       );
     }
     
-    export default Homepage;
+
+    
+
+
+    
