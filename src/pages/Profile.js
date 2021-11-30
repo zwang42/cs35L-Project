@@ -210,7 +210,7 @@ export default function Profile(props) {
                 }
                 </Form>
                 <UserModal users={users} handleClose={disableModal} status={modalStatus} />
-                </div>
+            </div>
         </div>
 	);
 }

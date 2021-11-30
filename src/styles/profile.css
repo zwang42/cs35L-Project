@@ -214,3 +214,30 @@ img{
 .profile-edit-btn {
     font-weight: 600;
 }
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:200px;
+    height:200px;
+}
+
+.display{
+    font-size: 20px;
+}
+
+.back{
+    background-color: lightskyblue;
+    height: 300px;
+    width: 200px;
+    margin-left: 250px;
+    margin-top: -250px;
+    opacity: 0.6;
+}
+
+.closer{
+    width: 40px;
+    height: 40px;
+}
