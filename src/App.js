@@ -16,6 +16,7 @@ import Login from "./pages/Login.js";
 import Homepage from "./pages/Homepage.js";
 import Signup from "./pages/Signup.js"
 import Profile from "./pages/Profile.js"
+import PostPage from "./pages/PostPage.js"
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route path = "/login" component = {Login} />
             <Route path = "/signup" component = {Signup} />
             <PrivateRoute path = "/profile/:userId" component = {Profile} />
+            <PrivateRoute path = "/post/:postId" component = {PostPage} />
             <PrivateRoute path = "/homepage" component = {Homepage} />
             <Route path="/">
                 {user ? <Redirect to="/homepage"/> : <Redirect to="/login"/>}
