@@ -57,6 +57,9 @@ export default function Signup() {
                 <div class="topshape"></div>
                 <div class="topshape"></div>
             </div>
+            <img class="login" src= "https://images.unsplash.com/photo-1534258936925-c58bed479fcb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2231&q=80"></img>
+            <img class="login1" src= "https://images.unsplash.com/photo-1576678927484-cc907957088c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"></img>
+            <img class="login2" src= "https://images.unsplash.com/photo-1530021356476-0a6375ffe73b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80"></img>    
             {error && <Alert variant = "danger">{error}</Alert>}
             <form onSubmit = {handleSubmit}>
                 <h1>FitnessGram Sign Up</h1>
