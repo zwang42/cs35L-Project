@@ -74,16 +74,16 @@ body{
     right: -250px;
 }
 img.login{
-    margin-left:380px;
-    margin-top: 100px;
+    margin-left:5px;
+    margin-top: -150px;
 }
 img.login1{
     margin-left:10px;
-    margin-top: 100px;
+    margin-top: -150px;
 }
 img.login2{
     margin-left:10px;
-    margin-top: 100px;
+    margin-top: -150px;
 }
 form{
     height: 600px;
