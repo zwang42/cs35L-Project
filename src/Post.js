@@ -52,9 +52,11 @@ export default function Post(props) {
             <h3 className = "post__username">{props.username}</h3>
 
             <img className = "post__image" src ={props.image}/>
-            <h4>Likes: {numLikes}</h4>
+            <div className = "like__area">
+                <Button onClick={onLike} className = "like__button" variant="danger">{props.likedStatus ? "Unlike" : "Like"}</Button>
+                <h4 className="like__text">{numLikes}</h4>
+            </div>
             <h5>View all comments</h5>
-            <Button onClick={onLike} >{props.likedStatus ? "Unlike" : "Like"}</Button>
             <InputGroup className="mb-3">
                 <FormControl
                     placeholder="Write a comment..."

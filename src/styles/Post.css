@@ -9,6 +9,7 @@
     object-fit: contain;
     border-top: 1px solid lightgrey;
     border-bottom: 1px solid lightgrey;
+    border-radius: 0px;
 }
 
 .post__text{
@@ -34,4 +35,17 @@
     flex:0;
     border: none;
     border-top: 1px solid lightgrey;
+}
+
+.like__area {
+    display: flex;
+    align-items: center;
+}
+
+.like__button {
+    width: 50px;
+}
+
+.like__text {
+    padding-left: 5px;
 }
