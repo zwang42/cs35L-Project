@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProfileInput from './ProfileInput.js';
 import UserModal from './Modal.js';
+import NavBar from './NavBar.js'
 import '../styles/profile.css'
 
 // firebase imports
@@ -35,6 +36,7 @@ export default function Profile(props) {
     const [numFollowers, setNumFollowers] = useState(null);
     const [users, setUsers] = useState([]);
     const [modalStatus, setModalStatus] = useState(false);
+    const [user, setUser] = useState(null);
 
     let storage = firebase.storage();
     let fs = firebase.firestore();
@@ -46,6 +48,7 @@ export default function Profile(props) {
         firebase.auth().onAuthStateChanged(function (user) {
             if (user != null) {
                 setUid(user.uid);
+                setUser(user);
                 setIsUser(targetUid == user.uid ? true : false);
 
                 // check if we are currently following the profile that we are on
@@ -175,6 +178,7 @@ export default function Profile(props) {
 
     return (
         <div class="container">
+            <NavBar user={user}></NavBar>
             <div class = "portion">
 		    <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip-2">{isUser ? "Click here to change profile" : null}</Tooltip>}>
 		        <Button variant = "" onClick = {handleClick}><img src={imgUrl}/></Button>
