@@ -68,7 +68,7 @@ export default function Signup() {
             <img class="login2" src= "https://images.unsplash.com/photo-1530021356476-0a6375ffe73b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80"></img>    
             {error && <Alert variant = "danger">{error}</Alert>}
             <form onSubmit = {handleSubmit}>
-                <h1>FitnessGram Sign Up</h1>
+                <h1>FitGram Sign Up</h1>
                 <Form.Group id = "email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control type = "email" ref = {emailRef} required></Form.Control>
