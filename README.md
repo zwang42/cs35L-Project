@@ -10,3 +10,14 @@ To start the FitGram app, please clone the repository on your local machine with
 
 Use the command `npm start` in the root directory to run the app in your local browser. If no other application is running, FitGram should open up on [http://localhost:3000](http://localhost:3000). 
 
+## Using FitGram
+
+The opening page should be [http://localhost:3000/login](http://localhost:3000/login). If you are a new user, please navigate to the [http://localhost:3000/signup](http://localhost:3000/signup) page with the Sign Up button. Enter your desired login information (email, username, and password with at least 6 characters). Then, signup using that authentication information.
+
+After signing in, you are able to navigate to various portions of the site! You are able to update your statistics throughout various fitness categories by filling up the form on your personal profile and also choose a profile picture. The main features are:
+
+1. Following other users.
+2. Liking and Commenting on other users' posts.
+3. Visit other user profiles with their statistics.
+
+Have fun using the app and welcome to the FitGram community!
