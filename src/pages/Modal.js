@@ -9,18 +9,15 @@ export default function UserModal({users, handleClose, status}) {
 
     return (
         <Modal show = {status} onHide={handleClose} scrollable={true}>
-        <div class="back">
         <Modal.Dialog>
-            <Modal.Header class="closer" closeButton>
-                <Modal.Title class="display">Followers/Following</Modal.Title>
+            <Modal.Header closeButton>
+                <Modal.Title>Followers/Following</Modal.Title>
             </Modal.Header>
 
         <Modal.Body>
             {displayUsers}
         </Modal.Body>
-
         </Modal.Dialog>
-        </div>
         </Modal>
     )
 }
