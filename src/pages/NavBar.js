@@ -25,7 +25,8 @@ export default function NavBar(props) {
   useEffect(() => {
     db.collection("users").onSnapshot(snapshot => {
       setUserList(snapshot.docs.map(doc => ({
-        username: doc.data().username,
+        value: doc.data().username,
+        label: doc.data().username,
         id: doc.id
       })));
     })
@@ -38,12 +39,14 @@ export default function NavBar(props) {
       <Container>
       <Navbar.Brand href='/homepage'>
         <img
+          className="header__image"
           src="https://images.unsplash.com/photo-1580136607993-fd598cf5c4f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1680&q=80"
           alt=""
         />
       </Navbar.Brand>
       <Nav className="ms-auto">
         <Select
+          className="search__box"
           value={selectedSearch}
           options={userList}
           onChange={handleChange}
@@ -51,12 +54,11 @@ export default function NavBar(props) {
       </Nav>
       {props.user ? (
         <Nav className="ms-auto">
-          <Navbar.Text>
+          <Navbar.Text className="header__link">
             {props.user.displayName ? <div> {props.user.displayName} </div> : <div> No name </div>}
           </Navbar.Text>
-          <Nav.Link href={'/profile/' + props.user.uid}>Profile</Nav.Link>
-          <Navbar.Text onClick={() => auth.signOut()}>Signout</Navbar.Text>
-          
+          <Nav.Link className="header__link" href={'/profile/' + props.user.uid}>Profile</Nav.Link>
+          <Navbar.Text className="header__link" onClick={() => auth.signOut()}>Signout</Navbar.Text>
         </Nav>
       ): (
         <Nav>

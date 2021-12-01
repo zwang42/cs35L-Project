@@ -56,7 +56,13 @@ export default function Post(props) {
                 <Button onClick={onLike} className = "like__button" variant="danger">{props.likedStatus ? "Unlike" : "Like"}</Button>
                 <h4 className="like__text">{numLikes}</h4>
             </div>
-            <h5>View all comments</h5>
+            <h4 className = "post__text"><strong>{props.username}:</strong> {props.caption}</h4>
+            <div className="post__comments">
+            {comments.map((comment) => (
+                <p>
+                <b>{comment.username}</b> {comment.text}
+                </p>
+            ))}
             <InputGroup className="mb-3">
                 <FormControl
                     placeholder="Write a comment..."
@@ -68,14 +74,7 @@ export default function Post(props) {
                    Send 
                 </Button>
             </InputGroup>
-            <h4 className = "post__text"><strong>{props.username}:</strong> {props.caption}</h4>
-            <div className="post__comments">
-          {comments.map((comment) => (
-            <p>
-              <b>{comment.username}</b> {comment.text}
-            </p>
-          ))}
-        </div>
+            </div>
         </div>
     )
 }

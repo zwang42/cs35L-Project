@@ -110,11 +110,8 @@ export default function Homepage(curr) {
     return (
         <div className="home">
             <NavBar user={user}></NavBar>
-            {user ? (<ImageUpload username={user.displayName}/>):
-            (<Link to= "/Login" className ="btn btn-primary">Login</Link>)}
-            {user ? (<button onClick={() => auth.signOut()}>Logout</button>) : <div/>}
+            {user && <ImageUpload username={user.displayName}/>}
             {displayPost}
-    
         </div>
       );
     }

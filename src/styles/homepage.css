@@ -4,6 +4,8 @@
 
 .home {
   background-color: #fafafa;
+  justify-content: center;
+  align-items: center;
 }
 
 .home__header {
