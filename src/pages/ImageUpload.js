@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {storage, db, auth} from "../firebase.js"
 import firebase from 'firebase'
+import '../styles/home.css'
 
 import {Button} from 'react-native'
 function ImageUpload({username}) {
@@ -54,13 +55,12 @@ function ImageUpload({username}) {
     };
 
     return (
-        <div>
+        <div class="poster">
+            <h1>Post Image</h1>
             <progress value={progress} max="100" />
             <input type="text" placeholder='Enter a caption' onChange={event => setCaption(event.target.value)} value ={caption}/>
             <input type="file" onChange={handleChange} />
-            <button class="alt" onClick={handleUpload}>Upload
-            </button>
-
+            <button class="alt" onClick={handleUpload}>Upload</button>
         </div>
     )
 }

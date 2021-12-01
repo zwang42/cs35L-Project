@@ -1,6 +1,7 @@
 import '../styles/homepage.css';
 import React, {useState, useEffect} from 'react';
 import Post from '../Post.js'
+import '../styles/home.css'
 
 import firebase from 'firebase/app';
 import 'firebase/auth';

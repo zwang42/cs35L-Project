@@ -3,6 +3,7 @@ import { db, auth } from "../firebase.js"
 import { Navbar, Nav, Container } from 'react-bootstrap'
 import Select from 'react-select'
 import { useHistory } from 'react-router-dom'
+import '../styles/home.css'
 
 export default function NavBar(props) {
   const [selectedSearch, setSearch] = useState(null);
@@ -32,11 +33,12 @@ export default function NavBar(props) {
   }, []);
 
   return (
+    <div class="navi">
     <Navbar sticky="top">
       <Container>
       <Navbar.Brand href='/homepage'>
         <img
-          src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png"
+          src="https://images.unsplash.com/photo-1580136607993-fd598cf5c4f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1680&q=80"
           alt=""
         />
       </Navbar.Brand>
@@ -45,7 +47,7 @@ export default function NavBar(props) {
           value={selectedSearch}
           options={userList}
           onChange={handleChange}
-          placeholder="Search..." />
+          placeholder="Search for users" />
       </Nav>
       {props.user ? (
         <Nav className="ms-auto">
@@ -63,5 +65,6 @@ export default function NavBar(props) {
       )}
       </Container>
     </Navbar>
+    </div>
   )
 }
