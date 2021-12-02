@@ -146,6 +146,10 @@ export default function Profile(props) {
             fs.collection("following").doc(uid).update({
                 following: firebase.firestore.FieldValue.arrayRemove(targetUid) 
             });
+            fs.collection("following").doc(targetUid).update({
+                followers: firebase.firestore.FieldValue.arrayRemove(uid)
+            });
+
             setNumFollowers(numFollowers-1);
         }
 
@@ -153,6 +157,10 @@ export default function Profile(props) {
         else {
             fs.collection("following").doc(uid).update({
                 following: firebase.firestore.FieldValue.arrayUnion(targetUid)
+            });
+            
+            fs.collection("following").doc(targetUid).update({
+                followers: firebase.firestore.FieldValue.arrayUnion(uid)
             });
             setNumFollowers(numFollowers+1);
         }
