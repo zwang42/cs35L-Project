@@ -12,6 +12,7 @@ export default function Post(props) {
     const [numLikes, setNumLikes] = useState(props.likes.length);
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState([]);
+    const [postUser, setPostUser] = useState("");
     
     useEffect(() => {
         let unsubscribe;
@@ -24,6 +25,11 @@ export default function Post(props) {
               setComments(snapshot.docs.map((doc) => doc.data()));
             });
         }
+
+        firebase.firestore().collection("posts").doc(props.postId).get().then((doc) => {
+            setPostUser(doc.data().username);
+        }
+        )
   
         return () => {
           unsubscribe();
@@ -49,14 +55,14 @@ export default function Post(props) {
 
     return (
         <div className="post">
-            <h3 className = "post__username">{props.user.displayName}</h3>
+            <h3 className = "post__username">{postUser}</h3>
 
             <img className = "post__image" src ={props.image}/>
             <div className = "like__area">
                 <Button onClick={onLike} className = "like__button" variant="danger">{props.likedStatus ? "Unlike" : "Like"}</Button>
                 <h4 className="like__text">{numLikes}</h4>
             </div>
-            <h4 className = "post__text"><strong>{props.user.displayName}:</strong> {props.caption}</h4>
+            <h4 className = "post__text"><strong>{postUser}:</strong> {props.caption}</h4>
             <div className="post__comments">
             {comments.map((comment) => (
                 <p>
