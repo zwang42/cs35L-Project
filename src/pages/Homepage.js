@@ -89,7 +89,8 @@ export default function Homepage(curr) {
     const commentPost = (comment, postId) => {
         fs.collection("posts").doc(postId).collection("comments").add({
             text:comment,
-            username: user.displayName
+            username: user.displayName,
+            timestamp:firebase.firestore.FieldValue.serverTimestamp()
         })
     }
 

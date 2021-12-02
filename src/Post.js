@@ -20,7 +20,7 @@ export default function Post(props) {
           unsubscribe = firebase.firestore()
             .collection("posts")
             .doc(props.postId)
-            .collection("comments")
+            .collection("comments").orderBy("timestamp", "desc")
             .onSnapshot((snapshot) => {
               setComments(snapshot.docs.map((doc) => doc.data()));
             });
