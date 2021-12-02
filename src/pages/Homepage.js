@@ -34,7 +34,7 @@ export default function Homepage(curr) {
                     fs.collection("following").doc(user.uid).get().then((doc) => {
                         let followingUsers = doc.data().following;
                         followingUsers.push(user.uid);
-                        fs.collectionGroup("posts").where("uid", 'in', followingUsers).orderBy('timestamp', 'desc').get().then((snapshot) => {
+                        fs.collectionGroup("posts").where("uid", 'in', followingUsers).orderBy('timestamp').get().then((snapshot) => {
                             let p = [];
                             let likesObj = {};
 
@@ -50,6 +50,7 @@ export default function Homepage(curr) {
                                 tempPost["postId"] = doc.id;
                                 p.push(tempPost);//}
                             });
+                            p = p.reverse();
                             setPosts(p);
                             setLikes(likesObj);
                         });
