@@ -73,7 +73,7 @@ export default function Profile(props) {
 
                 // get some userdata 
                 fs.collection("users").doc(targetUid).get().then(doc => {
-                    let data = {"uid": targetUid};
+                    let data = {"uid": targetUid, "username": doc.get("username")};
                     DATA_FIELDS.forEach(function (field) {
                         data[field] = doc.get(MAP_NAME + '.' + field);
                         if (!data[field]) {
@@ -134,7 +134,7 @@ export default function Profile(props) {
     // Save the input data to firebase
     const onSave = (event) => {
         event.preventDefault();
-        fs.collection("users").doc(uid).set({ userData });
+        fs.collection("users").doc(uid).update(userData);
     }
 
     // follow or unfollow a user
