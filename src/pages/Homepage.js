@@ -34,12 +34,11 @@ export default function Homepage(curr) {
                     fs.collection("following").doc(user.uid).get().then((doc) => {
                         let followingUsers = doc.data().following;
                         followingUsers.push(user.uid);
-                        fs.collectionGroup("posts").where("uid", 'in', followingUsers).get().then((snapshot) => {
+                        fs.collectionGroup("posts").where("uid", 'in', followingUsers).orderBy('timestamp', 'desc').get().then((snapshot) => {
                             let p = [];
                             let likesObj = {};
 
                             snapshot.forEach((doc) => {
-                                //if(followingUsers.includes((String(doc.data().uid)))){
                                 let tempPost = doc.data();
                                 if (tempPost.likes.includes(user.uid)) {
                                     likesObj[doc.id] = true;
