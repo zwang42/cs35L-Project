@@ -139,6 +139,8 @@ export default function Profile(props) {
 
     // follow or unfollow a user
     const changeFollow = (event) => {
+        event.preventDefault();
+
         // if we are following then unfollow
         if (isFollowing) {
             fs.collection("following").doc(uid).update({
