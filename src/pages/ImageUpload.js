@@ -16,6 +16,7 @@ function ImageUpload({username}) {
     }
 
     const handleUpload = () => {
+        if (image){
         const uploadTask = storage.ref(`images/${image.name}`).put(image);
         
         uploadTask.on(
@@ -50,7 +51,7 @@ function ImageUpload({username}) {
                         setImage(null);
                     });
             }
-        );
+        );}
 
     };
 
