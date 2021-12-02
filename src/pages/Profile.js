@@ -180,20 +180,22 @@ export default function Profile(props) {
         <div class="container">
             <NavBar user={user}></NavBar>
             <div class = "portion">
-		    <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip-2">{isUser ? "Click here to change profile" : null}</Tooltip>}>
-		        <Button variant = "" onClick = {handleClick}><img src={imgUrl}/></Button>
-		    </OverlayTrigger>
-            {isUser && <input type={"file"} ref={hiddenFileInput} onChange={handleImageChange} style={{display: 'none'}}/>}
-                <div class="profile-stats">
-                    <ul>
-                        <div onClick = {getFollowers}>
-                            <li><span class="profile-stat-count">{numFollowers}</span>Followers</li>
-                        </div>
-                        <div onClick = {getFollowing}>
-                            <li><span class="profile-stat-count">{numFollowing}</span>Following</li>
-                        </div>
-                    </ul>
-			    </div>
+            <div class="prof">
+                <OverlayTrigger placement="top" delay={{ show: 250, hide: 400 }} overlay={<Tooltip id="button-tooltip-2">{isUser ? "Click here to change profile" : null}</Tooltip>}>
+                    <Button variant = "" onClick = {handleClick}><img src={imgUrl}/></Button>
+                </OverlayTrigger>
+                {isUser && <input type={"file"} ref={hiddenFileInput} onChange={handleImageChange} style={{display: 'none'}}/>}
+                    <div class="profile-stats">
+                        <ul>
+                            <div onClick = {getFollowers}>
+                                <li><span class="profile-stat-count">{numFollowers}</span>Followers</li>
+                            </div>
+                            <div onClick = {getFollowing}>
+                                <li><span class="profile-stat-count">{numFollowing}</span>Following</li>
+                            </div>
+                        </ul>
+                    </div>
+            </div>
                 <Form>
                 <h1>Profile</h1>
                 <div class = "in">

@@ -38,7 +38,7 @@ form{
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
     padding: 50px 35px;
-    margin-top: 500px;
+    margin-top: 600px;
 }
 
 .portion{
@@ -188,7 +188,7 @@ img{
 }
 
 .profile-stats {
-    margin-top: 2.3rem;
+    margin-top: 0px;
 }
 
 .profile-stats li {
@@ -215,4 +215,8 @@ img{
 .profile-stat-count,
 .profile-edit-btn {
     font-weight: 600;
+}
+
+.prof{
+    margin-top: -150px;
 }
