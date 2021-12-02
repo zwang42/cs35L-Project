@@ -75,7 +75,7 @@ export default function Profile(props) {
                 fs.collection("users").doc(targetUid).get().then(doc => {
                     let data = {"uid": targetUid, "username": doc.get("username")};
                     DATA_FIELDS.forEach(function (field) {
-                        data[field] = doc.get(MAP_NAME + '.' + field);
+                        data[field] = doc.data()[field];
                         if (!data[field]) {
                             data[field] = "";
                         }
