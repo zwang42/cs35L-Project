@@ -88,6 +88,7 @@ export default function Profile(props) {
         }
 
         fetchData();
+        console.log("new page loaded");
     }, []);
     
     // BEGIN FILE UPLOAD FUNCTIONS

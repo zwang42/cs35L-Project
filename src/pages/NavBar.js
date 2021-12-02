@@ -14,13 +14,14 @@ export default function NavBar(props) {
     let page = '/profile/' + selectedSearch.id;
     //console.log(page);
     history.push(page);
+    history.go(0);
   }
 
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
+  // const options = [
+  //   { value: 'chocolate', label: 'Chocolate' },
+  //   { value: 'strawberry', label: 'Strawberry' },
+  //   { value: 'vanilla', label: 'Vanilla' },
+  // ];
 
   useEffect(() => {
     db.collection("users").onSnapshot(snapshot => {
@@ -30,7 +31,7 @@ export default function NavBar(props) {
         id: doc.id
       })));
     })
-    console.log(userList);
+    // console.log(userList);
   }, []);
 
   return (

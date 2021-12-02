@@ -1,8 +1,12 @@
 .post {
     max-width: 1000px;
     background-color: white;
-    border: 1px solid lightgrey;
+    border: 3px solid lightgrey;
     margin-bottom: 50px;
+    margin-top: 50px;
+    margin-left: 8%;
+    margin-right: 8%;
+    border-radius: 5px;
 }
 .post__image {
     width:100%;
@@ -10,6 +14,7 @@
     border-top: 1px solid lightgrey;
     border-bottom: 1px solid lightgrey;
     border-radius: 0px;
+    margin-top: 0px;
     margin-left: 0px;
 }
 
@@ -19,7 +24,7 @@
 }
 
 .post__username{
-    padding: 15px 10px;
+    padding: 10px 10px;
     margin-right: 8px;
 }
 .post_comments{
@@ -41,6 +46,7 @@
 .like__area {
     display: flex;
     align-items: center;
+    margin-top: 10px;
 }
 
 .like__button {
